@@ -42,23 +42,23 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/conference:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/conference:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/PAULO-demo-steps:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/PAULO-demo-steps:$IMAGE_TAG
       - name: Download task def
         run: |
-          aws ecs describe-task-definition --task-definition conference --query taskDefinition > task-definition.json
+          aws ecs describe-task-definition --task-definition PAULO-demo-steps --query taskDefinition > task-definition.json
       - name: Render Amazon ECS task definition for container
         id: render-container
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: task-definition.json
-          container-name: conference
+          container-name: PAULO-demo-steps
           image: ${{ steps.login-ecr.outputs.registry }}/paulo-demo-steps:${{ github.sha }}
 
       - name: Deploy to Amazon ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.render-container.outputs.task-definition }}
-          service: conference
-          cluster: conference
+          service: PAULO-demo-steps
+          cluster: PAULO-demo-steps
           wait-for-service-stability: true
