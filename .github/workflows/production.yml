@@ -53,7 +53,7 @@ jobs:
         with:
           task-definition: task-definition.json
           container-name: PAULO-demo-steps
-          image: ${{ steps.login-ecr.outputs.registry }}/paulo-demo-steps:${{ github.sha }}
+          image: ${{ steps.login-ecr.outputs.registry }}/paulo-demo-stepsss:${{ github.sha }}
 
       - name: Deploy to Amazon ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
